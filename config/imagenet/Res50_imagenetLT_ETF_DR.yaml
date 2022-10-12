@@ -1,0 +1,51 @@
+name: Res50_imagenetLT_ETF_DR
+print_freq: 100
+workers: 48
+log_dir: 'logs'
+model_dir: 'ckps'
+
+
+# dataset & model setting
+dataset: 'imagenet'
+data_path: '/data/datasets/ImageNet2012/'
+num_classes: 1000
+imb_factor: null
+backbone: 'resnet50_fe'
+resume: ''
+head_class_idx:
+  - 0
+  - 390
+med_class_idx:
+  - 390
+  - 835
+tail_class_idx:
+  - 835
+  - 1000
+
+
+# distributed training
+deterministic: False
+distributed: False
+gpu: null
+world_size: -1
+rank: -1
+dist_url: 'tcp://224.66.41.62:23456'
+dist_backend:  'nccl'
+multiprocessing_distributed: False
+
+
+# Train
+mode: 'stage1'
+lr: 0.1
+batch_size: 1024
+weight_decay: 5e-4
+num_epochs: 90
+momentum: 0.9
+cos: True
+mixup: True
+alpha: 0.2
+
+### ETF
+ETF_classifier: True
+reg_dot_loss: True
+reg_lam: 0.01
